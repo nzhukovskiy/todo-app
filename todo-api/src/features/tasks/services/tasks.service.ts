@@ -1,5 +1,7 @@
 import {Repository} from "typeorm";
 import {Task} from "../models/task";
+import {CreateTaskDto} from "../dtos/create-task.dto";
+import {Status} from "../models/status";
 
 export class TasksService {
 
@@ -7,5 +9,36 @@ export class TasksService {
     }
     async getForUser(userId: number) {
         return await this.taskRepository.find({where: {user: {id: userId}}});
+    }
+
+    async create(userId: number, createTaskDto: CreateTaskDto) {
+        let task = await this.taskRepository.create(createTaskDto);
+        task.userId = userId;
+        return await this.taskRepository.save(task);
+    }
+
+    async update(id: number, userId: number, createTaskDto: CreateTaskDto) {
+        let task = await this.getTaskAndCheckOwnership(id, userId);
+        Object.assign(task, createTaskDto);
+        return await this.taskRepository.save(task);
+    }
+
+    async markAsDone(id: number, userId: number) {
+        let task = await this.getTaskAndCheckOwnership(id, userId);
+        task.status = Status.done;
+        return await this.taskRepository.save(task);
+    }
+
+    async delete(id: number, userId: number) {
+        let task = await this.getTaskAndCheckOwnership(id, userId);
+        await this.taskRepository.remove(task);
+    }
+
+    private async getTaskAndCheckOwnership(id: number, userId: number) {
+        const task = await this.taskRepository.findOneBy( { id });
+        if (!task || task.userId !== userId) {
+            throw new Error("Task not found");
+        }
+        return task;
     }
 }

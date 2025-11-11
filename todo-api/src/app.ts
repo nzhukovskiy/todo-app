@@ -18,6 +18,7 @@ import {authMiddleware} from "./core/middlewares/auth.middleware";
 import {AuthService} from "./features/auth/services/auth.service";
 import {AuthController} from "./features/auth/controllers/auth.controller";
 import {LoginUserDto} from "./features/auth/dtos/login-user.dto";
+import {CreateTaskDto} from "./features/tasks/dtos/create-task.dto";
 
 const app = express();
 const port = 3000;
@@ -41,6 +42,10 @@ async function start() {
 
 
     router.get('/tasks', authMiddleware(tokenService), tasksController.getForUser.bind(tasksController));
+    router.post('/tasks', authMiddleware(tokenService), validateDtoMiddleware(CreateTaskDto), tasksController.create.bind(tasksController));
+    router.put('/tasks/:id', authMiddleware(tokenService), validateDtoMiddleware(CreateTaskDto), tasksController.update.bind(tasksController));
+    router.patch('/tasks/:id/mark-as-done', authMiddleware(tokenService), tasksController.markAsDone.bind(tasksController));
+    router.delete('/tasks/:id', authMiddleware(tokenService), tasksController.delete.bind(tasksController));
     router.post('/users', validateDtoMiddleware(CreateUserDto), usersController.registerUser.bind(usersController));
     router.post('/auth/login', validateDtoMiddleware(LoginUserDto), authController.login.bind(authController));
 

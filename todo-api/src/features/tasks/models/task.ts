@@ -10,7 +10,7 @@ export class Task {
     @Column()
     title!: string;
 
-    @Column()
+    @Column({nullable: true})
     description!: string;
 
     @Column({
@@ -20,6 +20,9 @@ export class Task {
     })
     status!: Status;
 
-    @ManyToOne(() => User, (user) => user.tasks)
+    @ManyToOne(() => User, (user) => user.tasks, {nullable: false})
     user!: User;
+
+    @Column()
+    userId!: number;
 }

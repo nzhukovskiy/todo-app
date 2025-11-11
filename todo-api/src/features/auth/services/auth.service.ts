@@ -12,7 +12,6 @@ export class AuthService {
 
     async login(loginUserDto: LoginUserDto) {
         const user = await this.userRepository.findOneBy({email: loginUserDto.email});
-        console.log(user)
         if (!user) {
             throw new Error("Invalid credentials");
         }
