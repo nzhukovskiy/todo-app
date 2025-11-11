@@ -12,6 +12,7 @@ export function tasksRoutes(tasksController: TasksController, tokenService: Toke
     router.get('/', authMiddleware(tokenService), tasksController.getForUser.bind(tasksController));
     router.post('/', authMiddleware(tokenService), validateDtoMiddleware(CreateTaskDto), tasksController.create.bind(tasksController));
     router.put('/:id', authMiddleware(tokenService), validateDtoMiddleware(CreateTaskDto), tasksController.update.bind(tasksController));
+    router.get('/:id', authMiddleware(tokenService), tasksController.getOne.bind(tasksController));
     router.patch('/:id/mark-as-done', authMiddleware(tokenService), tasksController.markAsDone.bind(tasksController));
     router.delete('/:id', authMiddleware(tokenService), tasksController.delete.bind(tasksController));
     return router;

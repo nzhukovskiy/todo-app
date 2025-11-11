@@ -7,6 +7,11 @@ export class UsersController {
     }
 
     async registerUser(req: Request, res: Response) {
-        return res.json(await this.usersService.registerUser(req.body));
+        try {
+            return res.json(await this.usersService.registerUser(req.body));
+        }
+        catch (e) {
+            res.status(409).json({error: e.message})
+        }
     }
 }

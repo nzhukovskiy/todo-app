@@ -11,6 +11,10 @@ export class TasksService {
         return await this.taskRepository.find({where: {user: {id: userId}}});
     }
 
+    async getOne(id: number, userId: number) {
+        return await this.getTaskAndCheckOwnership(id, userId);
+    }
+
     async create(userId: number, createTaskDto: CreateTaskDto) {
         let task = await this.taskRepository.create(createTaskDto);
         task.userId = userId;

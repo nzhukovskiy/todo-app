@@ -9,6 +9,15 @@ export class TasksController {
         return res.json(await this.tasksService.getForUser((req as any).user.id));
     }
 
+    async getOne(req: Request, res: Response) {
+        try {
+            return res.json(await this.tasksService.getOne(parseInt(req.params.id), (req as any).user.id));
+        }
+        catch (e) {
+            return res.status(404).json({error: e.message});
+        }
+    }
+
     async create(req: Request, res: Response) {
         return res.json(await this.tasksService.create((req as any).user.id, req.body));
     }
