@@ -7,26 +7,21 @@ import {User} from "./features/users/models/user";
 import {UsersService} from "./features/users/services/users.service";
 import {UsersController} from "./features/users/controllers/users.controller";
 import {TokenService} from "./features/token/services/token.service";
-import {validateDtoMiddleware} from "./core/middlewares/validate-dto.middleware";
-import {CreateUserDto} from "./features/users/dtos/create-user.dto";
 import dotenv from "dotenv";
 
 dotenv.config({ path: '.env' });
 
 import DataSource from "./config/data-source";
-import {authMiddleware} from "./core/middlewares/auth.middleware";
 import {AuthService} from "./features/auth/services/auth.service";
 import {AuthController} from "./features/auth/controllers/auth.controller";
-import {LoginUserDto} from "./features/auth/dtos/login-user.dto";
-import {CreateTaskDto} from "./features/tasks/dtos/create-task.dto";
+import {authRoutes} from "./features/auth/routes/auth-routes";
+import {tasksRoutes} from "./features/tasks/routes/tasks-routes";
+import {userRoutes} from "./features/users/routes/user-routes";
 
 const app = express();
 const port = 3000;
 
 app.use(express.json());
-
-const router= app.router;
-
 async function start() {
     await DataSource.initialize();
     const tasksRepository = DataSource.getRepository(Task);
@@ -39,24 +34,13 @@ async function start() {
     const authService = new AuthService(userRepository, tokenService);
     const authController = new AuthController(authService);
 
-
-
-    router.get('/tasks', authMiddleware(tokenService), tasksController.getForUser.bind(tasksController));
-    router.post('/tasks', authMiddleware(tokenService), validateDtoMiddleware(CreateTaskDto), tasksController.create.bind(tasksController));
-    router.put('/tasks/:id', authMiddleware(tokenService), validateDtoMiddleware(CreateTaskDto), tasksController.update.bind(tasksController));
-    router.patch('/tasks/:id/mark-as-done', authMiddleware(tokenService), tasksController.markAsDone.bind(tasksController));
-    router.delete('/tasks/:id', authMiddleware(tokenService), tasksController.delete.bind(tasksController));
-    router.post('/users', validateDtoMiddleware(CreateUserDto), usersController.registerUser.bind(usersController));
-    router.post('/auth/login', validateDtoMiddleware(LoginUserDto), authController.login.bind(authController));
-
-    app.get('/', (req, res) => {
-        res.send('Hello from Express!');
-    });
+    app.use('/auth', authRoutes(authController));
+    app.use('/tasks', tasksRoutes(tasksController, tokenService));
+    app.use('/users', userRoutes(usersController));
 
     app.listen(port, () => {
         console.log(`Express app listening at http://localhost:${port}`);
     });
 }
-
 
 start().then();
