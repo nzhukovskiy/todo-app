@@ -1,5 +1,6 @@
 import {Status} from "./status";
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {User} from "../../users/models/user";
 
 @Entity()
 export class Task {
@@ -18,4 +19,7 @@ export class Task {
         default: Status.pending,
     })
     status!: Status;
+
+    @ManyToOne(() => User, (user) => user.tasks)
+    user!: User;
 }
