@@ -12,7 +12,7 @@ export class TasksService {
     }
 
     async getOne(id: number, userId: number) {
-        return await this.getTaskAndCheckOwnership(id, userId);
+        return await this.getTaskAndCheckOwnership(id, userId, true);
     }
 
     async create(userId: number, createTaskDto: CreateTaskDto) {
@@ -38,8 +38,20 @@ export class TasksService {
         await this.taskRepository.remove(task);
     }
 
-    private async getTaskAndCheckOwnership(id: number, userId: number) {
-        const task = await this.taskRepository.findOneBy( { id });
+    private async getTaskAndCheckOwnership(id: number, userId: number, selectUser = false) {
+        const task = selectUser ?
+            await this.taskRepository.findOne( {
+                where: { id },
+                relations: {user: true},
+                select: {
+                    user: {
+                        password: false,
+                        id: true,
+                        email: true
+                    }
+                }
+            })
+            : await this.taskRepository.findOneBy( { id });
         if (!task || task.userId !== userId) {
             throw new Error("Task not found");
         }

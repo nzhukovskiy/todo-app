@@ -8,8 +8,9 @@ import {UsersService} from "./features/users/services/users.service";
 import {UsersController} from "./features/users/controllers/users.controller";
 import {TokenService} from "./features/token/services/token.service";
 import dotenv from "dotenv";
+import cors from "cors"
 
-dotenv.config({ path: '.env' });
+dotenv.config({ path: '../.env' });
 
 import DataSource from "./config/data-source";
 import {AuthService} from "./features/auth/services/auth.service";
@@ -22,6 +23,7 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
+app.use(cors());
 async function start() {
     await DataSource.initialize();
     const tasksRepository = DataSource.getRepository(Task);
