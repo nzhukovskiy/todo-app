@@ -1,10 +1,12 @@
 import {createContext, use, useContext, useEffect, useState} from "react";
 import type {User} from "../models/user.ts";
 import {jwtDecode} from "jwt-decode";
-import {loginUser} from "../../features/auth/api/auth.api.ts";
+import {loginUser, registerUser} from "../../features/auth/api/auth.api.ts";
 import type {LoginUserDto} from "../../features/auth/dtos/login-user.dto.ts";
+import type {CreateUserDto} from "../../features/auth/dtos/create-user-dto.ts";
 
-type AuthContextDataType = {logout: () => Promise<void>, login: (loginUserDto: LoginUserDto) => Promise<void>, user: User | null}
+type AuthContextDataType =  {logout: () => Promise<void>, login: (loginUserDto: LoginUserDto) => Promise<void>, user: User | null, register: (createUserDto: CreateUserDto) => Promise<void>};
+
 
 const AuthContext = createContext<AuthContextDataType | null>(null);
 
@@ -17,7 +19,12 @@ export function AuthProvider({children}) {
 
     const login = async (loginUserDto: LoginUserDto) => {
         const token = await loginUser(loginUserDto);
-        console.log(token);
+        localStorage.setItem("token", token);
+        getUserFromToken();
+    }
+
+    const register = async (createUserDto: CreateUserDto) => {
+        const token = await registerUser(createUserDto);
         localStorage.setItem("token", token);
         getUserFromToken();
     }
@@ -30,7 +37,8 @@ export function AuthProvider({children}) {
     const value = {
         user,
         login,
-        logout
+        logout,
+        register
     }
 
     const getUserFromToken = () => {
