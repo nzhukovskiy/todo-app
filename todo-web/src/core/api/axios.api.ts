@@ -7,11 +7,10 @@ const axiosApi = axios.create({
 
 axiosApi.interceptors.request.use(
     (config) => {
-
         const token = localStorage.getItem('token');
-        // if (token) {
-            config.headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0ZXN0QG1haWwucnUiLCJpYXQiOjE3NjI5NDc1NDcsImV4cCI6MTc2MzgxMTU0N30.1afz-U-0bpnyaCJ8WRT_ftWXULDYqAsPFzg351Qw7p4`;
-        // }
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
         return config;
     },
     (error) => {

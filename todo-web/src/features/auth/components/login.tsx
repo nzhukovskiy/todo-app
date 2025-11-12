@@ -1,4 +1,4 @@
-import {useAuth} from "../../core/context/auth-context.tsx";
+import {useAuth} from "../../../core/context/auth-context.tsx";
 import {useState} from "react";
 
 export function Login() {

@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 import './App.css'
 import {useAuth} from "./core/context/auth-context.tsx";
 import {axiosApi} from "./core/api/axios.api.ts";
-import {Login} from "./features/auth/login.tsx";
+import {Login} from "./features/auth/components/login.tsx";
 import {AllTasks} from "./features/tasks/components/all-tasks.tsx";
 
 function App() {
@@ -20,7 +20,11 @@ function App() {
 
     if (context.user) {
         return (
-            <AllTasks></AllTasks>
+            <>
+                <button onClick={context.logout}>Выйти</button>
+                <AllTasks></AllTasks>
+            </>
+
         )
     } else {
         return (

@@ -15,10 +15,10 @@ export function AllTasks() {
     return <div>
         {
             tasks?.map((task) => (
-                <>
+                <div key={task.id}>
                     <h1>{task.title}</h1>
                     <div>{task.description}</div>
-                </>
+                </div>
                 ))
         }
     </div>
