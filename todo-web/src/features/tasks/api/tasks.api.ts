@@ -4,3 +4,7 @@ export async function getTasks() {
     const tasks = await axiosApi.get('tasks');
     return tasks.data;
 }
+
+export async function deleteTask(id: number) {
+    await axiosApi.delete(`tasks/${id}`);
+}
