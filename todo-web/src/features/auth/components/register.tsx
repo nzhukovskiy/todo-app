@@ -11,7 +11,7 @@ export function Register() {
     }
 
     return <div>
-        <UserForm buttonTitle={"Зарегистироваться"} eventHandler={register}></UserForm>
+        <UserForm buttonTitle={"Зарегистироваться"} eventHandler={register} useValidation={true}></UserForm>
     </div>
 
 }

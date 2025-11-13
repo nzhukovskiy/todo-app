@@ -11,6 +11,6 @@ export function Login() {
     }
 
     return <div>
-        <UserForm buttonTitle={"Войти"} eventHandler={login}></UserForm>
+        <UserForm buttonTitle={"Войти"} eventHandler={login} useValidation={false}></UserForm>
     </div>
 }

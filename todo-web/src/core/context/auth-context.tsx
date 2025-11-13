@@ -4,6 +4,7 @@ import {jwtDecode} from "jwt-decode";
 import {loginUser, registerUser} from "../../features/auth/api/auth.api.ts";
 import type {LoginUserDto} from "../../features/auth/dtos/login-user.dto.ts";
 import type {CreateUserDto} from "../../features/auth/dtos/create-user-dto.ts";
+import {axiosApi, setupInterceptors} from "../api/axios.api.ts";
 
 type AuthContextDataType =  {logout: () => Promise<void>, login: (loginUserDto: LoginUserDto) => Promise<void>, user: User | null, register: (createUserDto: CreateUserDto) => Promise<void>};
 
@@ -14,7 +15,13 @@ export function AuthProvider({children}) {
     const [user, setUser] = useState<User | null>(null)
 
     useEffect(() => {
+        const interceptors = setupInterceptors(value);
         getUserFromToken();
+
+        return () => {
+            axiosApi.interceptors.request.eject(interceptors.requestInterceptor);
+            axiosApi.interceptors.response.eject(interceptors.responseInterceptor);
+        }
     }, [])
 
     const login = async (loginUserDto: LoginUserDto) => {
@@ -45,7 +52,6 @@ export function AuthProvider({children}) {
         const token = localStorage.getItem("token");
         if (token) {
             const user = jwtDecode(token) as User;
-            console.log(user);
             setUser(user);
         }
     }
