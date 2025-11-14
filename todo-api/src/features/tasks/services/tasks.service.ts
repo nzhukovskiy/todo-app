@@ -2,6 +2,7 @@ import {Repository} from "typeorm";
 import {Task} from "../models/task";
 import {CreateTaskDto} from "../dtos/create-task.dto";
 import {Status} from "../models/status";
+import {NotFoundError} from "../../../core/errors/app-errors";
 
 export class TasksService {
 
@@ -53,7 +54,7 @@ export class TasksService {
             })
             : await this.taskRepository.findOneBy( { id });
         if (!task || task.userId !== userId) {
-            throw new Error("Task not found");
+            throw new NotFoundError("Task not found");
         }
         return task;
     }

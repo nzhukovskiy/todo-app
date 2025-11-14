@@ -1,5 +1,6 @@
 import {UsersService} from "../services/users.service";
 import {Request, Response} from "express";
+import {AppError} from "../../../core/errors/app-errors";
 
 export class UsersController {
 
@@ -7,11 +8,6 @@ export class UsersController {
     }
 
     async registerUser(req: Request, res: Response) {
-        try {
-            return res.json(await this.usersService.registerUser(req.body));
-        }
-        catch (e) {
-            res.status(409).json({error: e.message})
-        }
+        return res.json(await this.usersService.registerUser(req.body));
     }
 }

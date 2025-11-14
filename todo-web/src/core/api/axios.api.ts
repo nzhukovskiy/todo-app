@@ -27,7 +27,7 @@ export const setupInterceptors = (authContext) => {
                 authContext.logout().then();
             }
             else {
-                toast(error.response.data.error, {type: "error"});
+                toast(error.response.data.message, {type: "error"});
             }
             return Promise.reject(error);
         }

@@ -3,6 +3,7 @@ import {Repository} from "typeorm";
 import {User} from "../../users/models/user";
 import bcrypt from "bcrypt";
 import {TokenService} from "../../token/services/token.service";
+import {UnauthorizedError} from "../../../core/errors/app-errors";
 
 export class AuthService {
     
@@ -13,10 +14,10 @@ export class AuthService {
     async login(loginUserDto: LoginUserDto) {
         const user = await this.userRepository.findOneBy({email: loginUserDto.email});
         if (!user) {
-            throw new Error("Invalid credentials");
+            throw new UnauthorizedError("Invalid credentials");
         }
         if (!(await bcrypt.compare(loginUserDto.password, user.password))) {
-            throw new Error("Invalid credentials");
+            throw new UnauthorizedError("Invalid credentials");
         }
         return this.tokenService.createToken({
             id: user.id,

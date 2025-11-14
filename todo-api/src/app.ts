@@ -18,6 +18,7 @@ import {AuthController} from "./features/auth/controllers/auth.controller";
 import {authRoutes} from "./features/auth/routes/auth-routes";
 import {tasksRoutes} from "./features/tasks/routes/tasks-routes";
 import {userRoutes} from "./features/users/routes/user-routes";
+import {errorHandlerMiddleware} from "./core/middlewares/error-handler.middleware";
 
 const app = express();
 const port = 3000;
@@ -39,6 +40,8 @@ async function start() {
     app.use('/auth', authRoutes(authController));
     app.use('/tasks', tasksRoutes(tasksController, tokenService));
     app.use('/users', userRoutes(usersController));
+
+    app.use(errorHandlerMiddleware());
 
     app.listen(port, () => {
         console.log(`Express app listening at http://localhost:${port}`);
