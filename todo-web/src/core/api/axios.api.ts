@@ -23,7 +23,7 @@ export const setupInterceptors = (authContext) => {
     const responseInterceptor = axiosApi.interceptors.response.use(
         response => response,
         error => {
-            if (error.response?.status === 401 && error.response.data.error === "Invalid token") {
+            if (error.response?.status === 401 && error.response.data.message === "Invalid token") {
                 authContext.logout().then();
             }
             else {
