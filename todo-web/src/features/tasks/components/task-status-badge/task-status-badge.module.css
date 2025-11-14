@@ -1,0 +1,17 @@
+.badge {
+    border-radius: 5px;
+    padding: 10px 15px;
+}
+
+.badge.pending {
+    background-color: #ffc862;
+}
+
+.badge.done {
+    background-color: #c4fd8d;
+}
+
+.badge div {
+    text-transform: uppercase;
+    white-space: nowrap;
+}

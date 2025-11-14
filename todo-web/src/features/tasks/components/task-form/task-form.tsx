@@ -1,6 +1,9 @@
-import type {Task} from "../models/task.ts";
+import type {Task} from "../../models/task.ts";
 import {useForm} from "react-hook-form";
-import type {CreateTaskDto} from "../dtos/create-task.dto.ts";
+import type {CreateTaskDto} from "../../dtos/create-task.dto.ts";
+import {faXmark} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import styles from "./task-form.module.css"
 
 export function TaskForm({   task,
                              onSubmit,
@@ -24,7 +27,7 @@ export function TaskForm({   task,
 
     return (
         <>
-            <button onClick={onClose}>Закрыть</button>
+            <button className='closeButton' onClick={onClose}><FontAwesomeIcon icon={faXmark} /></button>
             <form onSubmit={handleSubmit(handleTaskSubmit)}>
                 <div>
                     <label htmlFor={"title"}>Название</label>
@@ -40,7 +43,7 @@ export function TaskForm({   task,
                 {errors.title && <p>{errors.title.message}</p>}
                 <div>
                     <label htmlFor={"description"}>Описание</label>
-                    <input type={"text"} id={"description"} {...register('description', {
+                    <textarea id={"description"} {...register('description', {
                         value: task ? task.description : ""
                     })}/>
                 </div>

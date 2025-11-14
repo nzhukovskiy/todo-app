@@ -1,6 +1,6 @@
 import './App.css'
 import {useAuth} from "./core/context/auth-context.tsx";
-import {AllTasks} from "./features/tasks/components/all-tasks.tsx";
+import {AllTasks} from "./features/tasks/components/all-tasks/all-tasks.tsx";
 import {AuthPage} from "./features/auth/components/auth-page/auth-page.tsx";
 import {ToastContainer} from "react-toastify";
 import ReactModal from "react-modal";
@@ -18,7 +18,6 @@ function App() {
     if (context.user) {
         body = (
             <>
-                <button onClick={context.logout}>Выйти</button>
                 <AllTasks></AllTasks>
                 <ToastContainer></ToastContainer>
             </>

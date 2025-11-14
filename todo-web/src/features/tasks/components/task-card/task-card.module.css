@@ -1,0 +1,32 @@
+.card {
+    box-shadow: 0 0 3px 1px gray;
+    margin-bottom: 20px;
+    padding: 25px;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 0 8px 1px gray;
+}
+
+.card .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card .controls {
+    display: flex;
+    gap: 10px;
+}
+
+.card .title h1 {
+    margin-bottom: 15px;
+    word-break: break-all;
+    cursor: pointer;
+}
+
+.card .bottomSection {
+    display: flex;
+    justify-content: space-between;
+}

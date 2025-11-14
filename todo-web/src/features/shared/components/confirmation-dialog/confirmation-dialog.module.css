@@ -1,0 +1,7 @@
+.title {
+    text-align: center;
+}
+.buttons {
+    display: flex;
+    gap: 15px;
+}
