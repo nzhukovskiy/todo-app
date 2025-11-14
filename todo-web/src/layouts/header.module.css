@@ -1,0 +1,12 @@
+.header {
+    width: 100%;
+    box-shadow: 0 7px 5px rgb(216, 216, 216);
+}
+.headerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+}

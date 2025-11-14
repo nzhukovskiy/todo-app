@@ -1,0 +1,23 @@
+.tabs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+    gap: 30px;
+    margin: 0 auto 30px;
+}
+
+.tabs div {
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.separator {
+    width: 3px;
+    height: 30px;
+    background-color: rgb(128, 128, 128);
+}
+
+.active {
+    color: #2768e5;
+}
