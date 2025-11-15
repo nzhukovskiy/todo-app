@@ -5,4 +5,4 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 console.log(isProduction);
 export const entities: any[] = [Task, User];
-export const migrations = isProduction ? [__dirname + "/../migrations/*.js"] : ['src/migrations/*.ts'];
+export const migrations = isProduction ? [__dirname + "/../../migrations/*.js"] : ['src/migrations/*.ts'];
