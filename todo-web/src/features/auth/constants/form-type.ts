@@ -1,4 +1,1 @@
-export enum FormType {
-    register = "REGISTER",
-    login = "LOGIN"
-}
+export type FormType = "REGISTER" | "LOGIN";

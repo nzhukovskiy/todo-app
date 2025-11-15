@@ -61,6 +61,7 @@ export function AllTasks() {
     }
 
     const closeTaskModal = () => {
+        console.log("close task modal fire")
         setSelectedTask(null);
         setIsOpen(false);
     }
@@ -126,9 +127,9 @@ export function AllTasks() {
                 <TaskCard key={task.id} task={task} onTaskClick={openTaskModal} onEdit={openTaskFormModal} onDelete={openDeleteTaskConfirmation}></TaskCard>
             ))
         }
-        <ReactModal isOpen={modalIsOpen} style={customStyles}>
-            <SingleTask {...selectedTask} onClose={closeTaskModal} onMarkCompleted={handleCompletion}></SingleTask>
-        </ReactModal>
+        {selectedTask && <ReactModal isOpen={modalIsOpen} style={customStyles}>
+            <SingleTask task={selectedTask} onClose={closeTaskModal} onMarkCompleted={handleCompletion}></SingleTask>
+        </ReactModal>}
         <ReactModal isOpen={confirmationModalOpen} style={confirmationDialogStyles}>
             <ConfirmationDialog onClose={handleConfirmationDialogClose}></ConfirmationDialog>
         </ReactModal>

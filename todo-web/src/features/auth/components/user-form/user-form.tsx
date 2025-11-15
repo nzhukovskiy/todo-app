@@ -1,18 +1,20 @@
 import {useForm} from "react-hook-form";
 import type {CreateUserDto} from "../../dtos/create-user-dto.ts";
-// import styles from "./user-form.module.css"
 
-export function UserForm({buttonTitle, eventHandler, useValidation}) {
-    // console.log('CSS Module styles:', styles);
+export function UserForm({buttonTitle, eventHandler, useValidation}:
+                             {
+                                 buttonTitle: string;
+                                 eventHandler: (createUserDto: CreateUserDto) => void;
+                                 useValidation: boolean
+                             }) {
 
     const {
         register,
         handleSubmit,
-        watch,
         formState: { errors },
     } = useForm<CreateUserDto>()
 
-    const handleUserEvent = async (data) => {
+    const handleUserEvent = async (data: CreateUserDto) => {
         eventHandler({email: data.email, password: data.password});
     }
 

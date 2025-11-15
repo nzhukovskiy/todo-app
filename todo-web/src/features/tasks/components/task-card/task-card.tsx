@@ -1,6 +1,5 @@
 import type {Task} from "../../models/task.ts";
 import styles from "./task-card.module.css"
-import {Status} from "../../constants/status.ts";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPencil, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {TaskStatusBadge} from "../task-status-badge/task-status-badge.tsx";

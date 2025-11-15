@@ -3,7 +3,6 @@ import {useForm} from "react-hook-form";
 import type {CreateTaskDto} from "../../dtos/create-task.dto.ts";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import styles from "./task-form.module.css"
 
 export function TaskForm({   task,
                              onSubmit,
@@ -17,11 +16,10 @@ export function TaskForm({   task,
     const {
         register,
         handleSubmit,
-        watch,
         formState: { errors },
     } = useForm<CreateTaskDto>()
 
-    const handleTaskSubmit = (data) => {
+    const handleTaskSubmit = (data: CreateTaskDto) => {
         onSubmit(data);
     }
 

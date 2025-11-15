@@ -1,6 +1,9 @@
 {
   "scripts": {
-    "start": "ts-node-dev --respawn --transpile-only src/app.ts"
+    "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
+    "build": "tsc",
+    "start": "node dist/app.js",
+    "migration:run": "node ./node_modules/typeorm/cli.js migration:run -d dist/config/data-source.js"
   },
   "devDependencies": {
     "@tsconfig/node-lts": "^22.0.2",

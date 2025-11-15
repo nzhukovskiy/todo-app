@@ -1,4 +1,1 @@
-export enum Status {
-    pending = "PENDING",
-    done = "DONE",
-}
+export type Status = "PENDING" | "DONE";

@@ -1,17 +1,18 @@
-import {createContext, use, useContext, useEffect, useState} from "react";
+import {createContext, useContext, useEffect, useState} from "react";
 import type {User} from "../models/user.ts";
 import {jwtDecode} from "jwt-decode";
 import {loginUser, registerUser} from "../../features/auth/api/auth.api.ts";
 import type {LoginUserDto} from "../../features/auth/dtos/login-user.dto.ts";
 import type {CreateUserDto} from "../../features/auth/dtos/create-user-dto.ts";
 import {axiosApi, setupInterceptors} from "../api/axios.api.ts";
+import type { ReactNode } from 'react'
 
-type AuthContextDataType =  {logout: () => Promise<void>, login: (loginUserDto: LoginUserDto) => Promise<void>, user: User | null, register: (createUserDto: CreateUserDto) => Promise<void>};
+export type AuthContextDataType =  {logout: () => Promise<void>, login: (loginUserDto: LoginUserDto) => Promise<void>, user: User | null, register: (createUserDto: CreateUserDto) => Promise<void>};
 
 
 const AuthContext = createContext<AuthContextDataType | null>(null);
 
-export function AuthProvider({children}) {
+export function AuthProvider({children}: {children: ReactNode}) {
     const [user, setUser] = useState<User | null>(null)
 
     useEffect(() => {

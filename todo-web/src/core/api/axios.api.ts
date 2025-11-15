@@ -1,12 +1,13 @@
 import axios from "axios";
 import {toast} from "react-toastify";
+import type {AuthContextDataType} from "../context/auth-context.tsx";
 
 const axiosApi = axios.create({
     baseURL: 'http://localhost:3000',
     timeout: 1000,
 })
 
-export const setupInterceptors = (authContext) => {
+export const setupInterceptors = (authContext: AuthContextDataType) => {
     const requestInterceptor = axiosApi.interceptors.request.use(
         (config) => {
             const token = localStorage.getItem('token');
