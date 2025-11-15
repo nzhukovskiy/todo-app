@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres
+    image: postgres:15
     restart: always
     shm_size: 128mb
     env_file:
