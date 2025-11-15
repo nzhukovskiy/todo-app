@@ -38,7 +38,7 @@ export function TaskForm({   task,
                         value: task ? task.title : ""
                     })}/>
                 </div>
-                {errors.title && <p>{errors.title.message}</p>}
+                {errors.title && <p className='error-message'>{errors.title.message}</p>}
                 <div>
                     <label htmlFor={"description"}>Описание</label>
                     <textarea id={"description"} {...register('description', {
